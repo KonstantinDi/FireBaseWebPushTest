@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h2>Firebase web push notification example</h2>
+<p id="token"></p>
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
+    import { getMessaging, getToken, onMessage } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-messaging.js"
+
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+        apiKey: "AIzaSyCsMpfd2oFVp3vVkM_R2EoscmNIMlHciOc",
+        authDomain: "test-9632d.firebaseapp.com",
+        projectId: "test-9632d",
+        storageBucket: "test-9632d.appspot.com",
+        messagingSenderId: "496386485511",
+        appId: "1:496386485511:web:98ed5e418c1ce88ee929a2"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+
+    // Initialize Firebase Cloud Messaging and get a reference to the service
+    const messaging = getMessaging(app);
+
+
+    getToken(messaging, { vapidKey: 'BK68JPZdbGxLUYuGwbMe3W_ruK8yj--rLPgup3f-nGDZ3y16FC0UoS3p4CgaS7jq38xb_ZNPMTZC11RDppU_Nwg' })
+        .then((currentToken) => {
+            if (currentToken) {
+                console.log("Token: "+currentToken);
+                // document.getElementById("token").innerHTML = currentToken;
+                // Send the token to your server and update the UI if necessary
+                // ...
+            } else {
+                // Show permission request UI
+                console.log('No registration token available. Request permission to generate one.');
+                // ...
+            }
+        }).catch((err) => {
+        console.log('An error occurred while retrieving token. ', err);
+        // ...
+    });
+
+    const messaging = getMessaging();
+    onMessage(messaging, (payload) => {
+        console.log('Message received. ', payload);
+    });
+
+
+    // function InitializeFireBaseMessaging(){
+    //     messaging.requestPermission()
+    //     .then(function(){
+    //         console.log("Notification Permission");
+    //     })
+    //     .then(function(token){
+    //         console.log("Token: "+token);
+    //         document.getElementById("token").innerHTML = token;
+    //     })
+    //     .catch(function (reason){
+    //         console.log(reason);
+    //     })
+    // }
+
+    // messaging.onMessage(function(payload){
+    //     console.log(payload);
+    // });
+    //
+    // messaging.onTokenRefresh(function(){
+    //     messaging.getToken()
+    //     .then(function(newtoken){
+    //         console.log("New Token : "+newtoken);
+    //     })
+    //     .catch(function (reason){
+    //         console.log(reason);
+    //     })
+    // })
+
+    // InitializeFireBaseMessaging();
+
+</script>
+
+</body>
+</html>
